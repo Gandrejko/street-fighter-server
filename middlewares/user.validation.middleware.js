@@ -63,9 +63,8 @@ const updateUserValid = (req, res, next) => {
 };
 
 const isBodyHaveOneRequired = ( { body }) => {
-  const {id, ...possible} = body;
-
-  if (!Object.keys(body).every(key => possible.hasOwnProperty(key))) {
+  const {idUSER, ...possibleUSER} = USER;
+  if (!Object.keys(body).every(key => possibleUSER.hasOwnProperty(key))) {
     throw new Error('Incorrect body fields');
   }
 
