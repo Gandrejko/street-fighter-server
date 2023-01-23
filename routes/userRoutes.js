@@ -11,7 +11,7 @@ const router = Router();
 
 router.post('/', createUserValid, (req, res, next) => {
   try {
-    const {body, body: {email, phoneNumber}} = req;
+    const {body: {email, phoneNumber}, id, ...body} = req;
 
     if(userService.search({email})) {
       throw new Error(`User with email ${email} already exist`)

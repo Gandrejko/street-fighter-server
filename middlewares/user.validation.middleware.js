@@ -15,7 +15,7 @@ const isBodyHaveAllRequired = ({ body }) => {
   const { idUSER, ...requiredUSER} = USER;
   const requiredKeys = JSON.stringify(Object.keys(required).sort().filter(key => required[key]));
   const requiredUSERKeys = JSON.stringify(Object.keys(requiredUSER).sort());
-  if(requiredKeys != requiredUSERKeys) {
+  if(requiredKeys !== requiredUSERKeys) {
     throw new Error("Incorrect body fields");
   }
 }
@@ -63,12 +63,12 @@ const updateUserValid = (req, res, next) => {
 };
 
 const isBodyHaveOneRequired = ( { body }) => {
-  const {idUSER, ...possibleUSER} = USER;
+  const {id, ...possibleUSER} = USER;
   if (!Object.keys(body).every(key => possibleUSER.hasOwnProperty(key))) {
     throw new Error('Incorrect body fields');
   }
 
-  if(Object.keys(body).length == 0) {
+  if(Object.keys(body).length === 0) {
     throw new Error('Body can`t be empty')
   }
 }

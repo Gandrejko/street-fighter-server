@@ -16,7 +16,7 @@ const isBodyHaveAllRequired = ({ body }) => {
   const {idFIGHTER, health: bodyHealth, ...requiredFIGHTER } = FIGHTER;
   const requiredKeys = JSON.stringify(Object.keys(required).sort().filter(key => required[key]));
   const requiredFIGHTERKeys = JSON.stringify(Object.keys(requiredFIGHTER).sort());
-  if(requiredKeys != requiredFIGHTERKeys) {
+  if(requiredKeys !== requiredFIGHTERKeys) {
     throw new Error("Incorrect body fields");
   }
 }
