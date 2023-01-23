@@ -5,6 +5,7 @@ import {
   updateUserValid,
 } from "../middlewares/user.validation.middleware.js";
 import { responseMiddleware } from "../middlewares/response.middleware.js";
+import { errorHandler } from "../middlewares/error.handler.middleware.js";
 
 const router = Router();
 
@@ -25,7 +26,7 @@ router.post('/', createUserValid, (req, res, next) => {
   } catch ({ message }) {
     next({message, status: 400})
   }
-}, responseMiddleware);
+}, responseMiddleware, errorHandler);
 
 router.get('/:id', (req, res, next) => {
   try {
@@ -41,18 +42,18 @@ router.get('/:id', (req, res, next) => {
   } catch ({ message }) {
     next({message, status: 404})
   }
-}, responseMiddleware);
+}, responseMiddleware, errorHandler);
 
 router.get('/', (req, res, next) => {
   res.data = userService.getAll();
   next()
-}, responseMiddleware);
+}, responseMiddleware, errorHandler);
 
 router.delete('/:id', (req, res, next) => {
   const { params: { id }}  = req;
   res.data = userService.delete(id);
   next();
-}, responseMiddleware);
+}, responseMiddleware, errorHandler);
 
 router.put('/:id', updateUserValid, (req, res, next) => {
   try {
@@ -75,6 +76,6 @@ router.put('/:id', updateUserValid, (req, res, next) => {
   } catch ({ message }) {
     next({message, status: 400});
   }
-}, responseMiddleware);
+}, responseMiddleware, errorHandler);
 
 export { router };
