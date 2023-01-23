@@ -13,7 +13,7 @@ const createUserValid = (req, res, next) => {
 const isBodyHaveAllRequired = ({ body }) => {
   const { id, ...required } = body;
   const { idUSER, ...requiredUSER} = USER;
-  const requiredKeys = JSON.stringify(Object.keys(required).sort());
+  const requiredKeys = JSON.stringify(Object.keys(required).sort().filter(key => required[key]));
   const requiredUSERKeys = JSON.stringify(Object.keys(requiredUSER).sort());
   if(requiredKeys != requiredUSERKeys) {
     throw new Error("Incorrect body fields");
