@@ -1,6 +1,5 @@
-const responseMiddleware = (req, res, next) => {
-  // TODO: Implement middleware that returns result of the query
-  next();
-};
 
-export { responseMiddleware };
+export const responseMiddleware = (req, res, next) => {
+  res.status(200).json(res.data);
+  next();
+}
