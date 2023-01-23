@@ -15,7 +15,6 @@ const isBodyHaveAllRequired = ({ body }) => {
   const { idUSER, ...requiredUSER} = USER;
   const requiredKeys = JSON.stringify(Object.keys(required).sort());
   const requiredUSERKeys = JSON.stringify(Object.keys(requiredUSER).sort());
-  console.log(requiredKeys, requiredUSERKeys)
   if(requiredKeys != requiredUSERKeys) {
     throw new Error("Incorrect body fields");
   }
