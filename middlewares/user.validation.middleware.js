@@ -12,9 +12,11 @@ const createUserValid = (req, res, next) => {
 
 const isBodyHaveAllRequired = ({ body }) => {
   const { id, ...required } = body;
+  const { idUSER, ...requiredUSER} = USER;
   const requiredKeys = JSON.stringify(Object.keys(required).sort());
-  const bodyKeys = JSON.stringify(Object.keys(body).sort());
-  if(requiredKeys != bodyKeys) {
+  const requiredUSERKeys = JSON.stringify(Object.keys(requiredUSER).sort());
+  console.log(requiredKeys, requiredUSERKeys)
+  if(requiredKeys != requiredUSERKeys) {
     throw new Error("Incorrect body fields");
   }
 }
@@ -36,7 +38,6 @@ const validationFullName = ({ lastName, firstName }) => {
   if (lastName && lastName.replace(/\s/g, '').lenght < 1) {
     throw new Error('Name cannot be empty or less than one letter');
   }
-
   if (firstName && firstName.replace(/\s/g, '').lenght < 1) {
     throw new Error('Name cannot be empty or less than one letter');
   }
