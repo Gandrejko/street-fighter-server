@@ -1,14 +1,45 @@
 import { userRepository } from "../repositories/userRepository.js";
 
 class UserService {
-  // TODO: Implement methods to work with user
 
   search(search) {
-    const item = userRepository.getOne(search);
-    if (!item) {
+    const user = userRepository.getOne(search);
+    if (!user) {
       return null;
     }
-    return item;
+    return user;
+  }
+
+  getAll() {
+    const users = userRepository.getAll();
+    if(!users) {
+      return null
+    }
+    return users
+  }
+
+  create(data) {
+    const newUser = userRepository.create(data);
+    if(!newUser) {
+      return null
+    }
+    return newUser
+  }
+
+  update(id, data) {
+    const updateUser = userRepository.update(id, data);
+    if(!updateUser) {
+      return null
+    }
+    return updateUser
+  }
+
+  delete(id) {
+    const deleteUser = userRepository.delete(id);
+    if(!deleteUser) {
+      return null
+    }
+    return deleteUser
   }
 }
 
