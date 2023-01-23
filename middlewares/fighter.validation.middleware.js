@@ -42,7 +42,7 @@ const validationName = ({ name }) => {
 
 const validationFighterParams = (arr) => {
   arr.forEach(({ value, min, max, paramName }) => {
-    if ((value || value == 0) && (value < min || value > max || isNaN(value))) {
+    if ((value || value === 0) && (value < min || value > max || isNaN(value))) {
       throw new Error(`${paramName} must be number between ${min} and ${max}`);
     }});
 }
@@ -58,13 +58,13 @@ const updateFighterValid = (req, res, next) => {
 }
 
 const isBodyHaveOneRequired = ( { body }) => {
-  const {id, ...possible} = body;
+  const {id, ...possible} = FIGHTER;
 
   if (!Object.keys(body).every(key => possible.hasOwnProperty(key))) {
     throw new Error('Incorrect body fields');
   }
 
-  if(Object.keys(body).length == 0) {
+  if(Object.keys(body).length === 0) {
     throw new Error('Body can`t be empty')
   }
 }
