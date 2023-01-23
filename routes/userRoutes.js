@@ -8,6 +8,73 @@ import { responseMiddleware } from "../middlewares/response.middleware.js";
 
 const router = Router();
 
-// TODO: Implement route controllers for user
+router.post('/', createUserValid, (req, res, next) => {
+  try {
+    const {body, body: {email, phoneNumber}} = req;
+
+    if(userService.search({email})) {
+      throw new Error(`User with email ${email} already exist`)
+    }
+
+    if(userService.search({phoneNumber})) {
+      throw new Error(`User with phone number ${phoneNumber} already exist`)
+    }
+
+    res.data = userService.create(body);
+    next();
+  } catch ({ message }) {
+    next({message, status: 400})
+  }
+}, responseMiddleware);
+
+router.get('/:id', (req, res, next) => {
+  try {
+    const { params: {id} }  = req;
+    const user = userService.search({id});
+
+    if(!user) {
+      throw new Error('Fighter not found');
+    }
+
+    res.data = user;
+    next();
+  } catch ({ message }) {
+    next({message, status: 404})
+  }
+}, responseMiddleware);
+
+router.get('/', (req, res, next) => {
+  res.data = userService.getAll();
+  next()
+}, responseMiddleware);
+
+router.delete('/:id', (req, res, next) => {
+  const { params: { id }}  = req;
+  res.data = userService.delete(id);
+  next();
+}, responseMiddleware);
+
+router.put('/:id', updateUserValid, (req, res, next) => {
+  try {
+    const { body, params: { id, email, phoneNumber }} = req;
+
+    if (!userService.search({id})) {
+      throw new Error('User not found');
+    }
+
+    if(userService.search({email})) {
+      throw new Error(`User with email ${email} already exist`)
+    }
+
+    if(userService.search({phoneNumber})) {
+      throw new Error(`User with phone number ${phoneNumber} already exist`)
+    }
+
+    res.data = userService.update(id, body);
+    next();
+  } catch ({ message }) {
+    next({message, status: 400});
+  }
+}, responseMiddleware);
 
 export { router };
