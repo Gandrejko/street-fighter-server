@@ -1,5 +1,5 @@
 const FIGHTER = {
-  id: "",
+  idFIGHTER: "",
   name: "",
   health: 100,
   power: 0,

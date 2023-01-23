@@ -13,11 +13,12 @@ const createFighterValid = (req, res, next) => {
 
 const isBodyHaveAllRequired = ({ body }) => {
   const { id, health: fighterHealth, ...required } = body;
-  const { health: bodyHealth, ...requiredBody } = body;
+  const {idFIGHTER, health: bodyHealth, ...requiredFIGHTER } = FIGHTER;
 
   const requiredKeys = JSON.stringify(Object.keys(required).sort());
-  const bodyKeys = JSON.stringify(Object.keys(requiredBody).sort());
-  if(requiredKeys != bodyKeys) {
+  const requiredFIGHTERKeys = JSON.stringify(Object.keys(requiredFIGHTER).sort());
+  console.log(requiredKeys, requiredFIGHTERKeys)
+  if(requiredKeys != requiredFIGHTERKeys) {
     throw new Error("Incorrect body fields");
   }
 }
