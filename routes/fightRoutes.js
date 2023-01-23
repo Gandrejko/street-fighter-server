@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { fightersService } from "../services/fightService.js";
+import { fightsService } from "../services/fightService.js";
 import {
   createUserValid,
   updateUserValid,
@@ -9,5 +9,15 @@ import { responseMiddleware } from "../middlewares/response.middleware.js";
 const router = Router();
 
 // OPTIONAL TODO: Implement route controller for fights
+
+router.get('/', (req, res, next) => {
+  res.data = fightsService.getAll();
+  next();
+}, responseMiddleware);
+
+router.post('/', (req, res, next) => {
+  res.data = fightsService.create(req.body);
+  next();
+}, responseMiddleware);
 
 export { router };
