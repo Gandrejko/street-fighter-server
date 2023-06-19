@@ -1,4 +1,5 @@
 import { USER } from "../models/user.js";
+import {checkIsAllRequiredFieldsPresent} from '../helpers/validation.js';
 
 const createUserValid = (req, res, next) => {
   try {
@@ -11,11 +12,10 @@ const createUserValid = (req, res, next) => {
 };
 
 const isBodyHaveAllRequired = ({ body }) => {
-  const { id, ...required } = body;
-  const { idUSER, ...requiredUSER} = USER;
-  const requiredKeys = JSON.stringify(Object.keys(required).sort().filter(key => required[key]));
-  const requiredUSERKeys = JSON.stringify(Object.keys(requiredUSER).sort());
-  if(requiredKeys !== requiredUSERKeys) {
+	const { id, ...user } = USER;
+	const requiredUserKeys = Object.keys(user);
+	const isAllRequiredFieldsPresent = checkIsAllRequiredFieldsPresent(requiredUserKeys, Object.keys(body));
+  if(!isAllRequiredFieldsPresent) {
     throw new Error("Incorrect body fields");
   }
 }
@@ -34,10 +34,10 @@ const validationPassword = ({ password }) => {
 }
 
 const validationFullName = ({ lastName, firstName }) => {
-  if (lastName && lastName.replace(/\s/g, '').lenght < 1) {
+  if (lastName && lastName.replace(/\s/g, '').length < 1) {
     throw new Error('Name cannot be empty or less than one letter');
   }
-  if (firstName && firstName.replace(/\s/g, '').lenght < 1) {
+  if (firstName && firstName.replace(/\s/g, '').length < 1) {
     throw new Error('Name cannot be empty or less than one letter');
   }
 }

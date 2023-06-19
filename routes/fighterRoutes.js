@@ -14,7 +14,7 @@ router.post('/', createFighterValid, (req, res, next) => {
     const {body, body: {name}} = req;
 
     if(fighterService.search({name})) {
-      throw new Error(`User with name ${name} already exist`)
+      throw new Error(`Fighter with name ${name} already exist`)
     }
 
     res.data = fighterService.create(body);

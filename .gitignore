@@ -1,1 +1,9 @@
 node_modules
+/.idea/.gitignore
+/config/database.json
+/.idea/modules.xml
+/client/package-lock.json
+/package-lock.json
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/street-fighter-server.iml
+/.idea/vcs.xml

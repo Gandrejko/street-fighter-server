@@ -1,4 +1,6 @@
 import { FIGHTER } from "../models/fighter.js";
+import {USER} from '../models/user.js';
+import {checkIsAllRequiredFieldsPresent} from '../helpers/validation.js';
 
 const createFighterValid = (req, res, next) => {
   try {
@@ -12,11 +14,10 @@ const createFighterValid = (req, res, next) => {
 }
 
 const isBodyHaveAllRequired = ({ body }) => {
-  const { id, health: fighterHealth, ...required } = body;
-  const {idFIGHTER, health: bodyHealth, ...requiredFIGHTER } = FIGHTER;
-  const requiredKeys = JSON.stringify(Object.keys(required).sort().filter(key => required[key]));
-  const requiredFIGHTERKeys = JSON.stringify(Object.keys(requiredFIGHTER).sort());
-  if(requiredKeys !== requiredFIGHTERKeys) {
+  const { id, health, ...fighter } = FIGHTER;
+  const requiredFighterKeys = Object.keys(fighter);
+  const isAllRequiredFieldsPresent = checkIsAllRequiredFieldsPresent(requiredFighterKeys, Object.keys(body));
+  if(!isAllRequiredFieldsPresent) {
     throw new Error("Incorrect body fields");
   }
 }
