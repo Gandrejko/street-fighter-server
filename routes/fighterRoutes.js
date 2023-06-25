@@ -6,12 +6,18 @@ import {
   updateFighterValid,
 } from "../middlewares/fighter.validation.middleware.js";
 import { errorHandler } from "../middlewares/error.handler.middleware.js";
+import {FIGHTER} from '../models/fighter.js';
 
 const router = Router();
 
 router.post('/', createFighterValid, (req, res, next) => {
   try {
-    const {body, body: {name}} = req;
+    const { body, body: {name} } = req;
+    const { id, health } = FIGHTER;
+
+    if(!body.health) {
+      body.health = health;
+    }
 
     if(fighterService.search({name})) {
       throw new Error(`Fighter with name ${name} already exist`)
@@ -54,9 +60,14 @@ router.delete('/:id', (req, res, next) => {
 router.put('/:id', updateFighterValid, (req, res, next) => {
   try {
     const { body, params: { id }} = req;
+    const { name } = body;
 
     if (!fighterService.search({id})) {
       throw new Error('Fighter not found');
+    }
+
+    if(fighterService.search({name})) {
+      throw new Error(`User with name ${name} already exist`);
     }
 
     res.data = fighterService.update(id, body);

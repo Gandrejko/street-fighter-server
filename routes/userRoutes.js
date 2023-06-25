@@ -11,18 +11,17 @@ const router = Router();
 
 router.post('/', createUserValid, (req, res, next) => {
   try {
-    const { id, ...body} = req.body;
-    const { email, phoneNumber } = body;
+    const { email, phoneNumber } = req.body;
 
     if(userService.search({email})) {
-      throw new Error(`User with email ${body.email} already exist`)
+      throw new Error(`User with email ${email} already exist`)
     }
 
     if(userService.search({phoneNumber})) {
-      throw new Error(`User with phone number ${body.phoneNumber} already exist`)
+      throw new Error(`User with phone number ${phoneNumber} already exist`)
     }
 
-    res.data = userService.create(body);
+    res.data = userService.create(req.body);
     next();
   } catch ({ message }) {
     next({message, status: 400})
@@ -32,10 +31,11 @@ router.post('/', createUserValid, (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   try {
     const { params: {id} }  = req;
+    console.log(id);
     const user = userService.search({id});
 
     if(!user) {
-      throw new Error('Fighter not found');
+      throw new Error('User not found');
     }
 
     res.data = user;
@@ -58,9 +58,11 @@ router.delete('/:id', (req, res, next) => {
 
 router.put('/:id', updateUserValid, (req, res, next) => {
   try {
-    const { body, params: { id, email, phoneNumber }} = req;
+    const { body, params: { id }} = req;
+    const { email, phoneNumber } = body;
+    const user = userService.search({id});
 
-    if (!userService.search({id})) {
+    if (!user) {
       throw new Error('User not found');
     }
 
